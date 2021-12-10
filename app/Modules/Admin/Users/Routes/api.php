@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 Route::group(['prefix' => 'users', 'middleware' => []], function () {
     Route::get('/', 'UsersController@index')->name('users.index');
     Route::get('/create', 'UsersController@create')->name('users.create');
