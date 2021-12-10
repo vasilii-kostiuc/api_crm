@@ -1,12 +1,12 @@
+
 <?php
 
-namespace App\Modules\Admin\Users\Controllers;
+namespace App\Modules\Pub\Auth\Controllers\Api;
 
-use App\Modules\Admin\Users\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UsersController extends Controller
+class AuthController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,21 +42,19 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Modules\Admin\Users\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
     }
 
     /**
-     * Display the specified resource.
+     * Edit resource.
      *
-     * @param  \App\Modules\Admin\Users\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
         //
     }
@@ -65,10 +63,9 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Modules\Admin\Users\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -76,10 +73,9 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Modules\Admin\Users\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
         //
     }

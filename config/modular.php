@@ -12,10 +12,9 @@ return [
     ],
     'modules'=>[
         'Admin'=>[
-            'Users'
         ],
         'Pub' =>[
-
+            'Auth'
         ]
     ]
 ];

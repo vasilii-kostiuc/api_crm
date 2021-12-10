@@ -264,7 +264,7 @@ class ModuleMake extends Command {
             } else {
                 $this->makeDirectory($path);
 
-                $stub = $this->files->get(base_path('resources/stubs/view.stub'));
+                $stub = $this->filesystem->get(base_path('resources/stubs/view.stub'));
 
                 $stub = str_replace(
                     [
@@ -275,7 +275,7 @@ class ModuleMake extends Command {
                     $stub
                 );
 
-                $this->files->put($path, $stub);
+                $this->filesystem->put($path, $stub);
                 $this->info('View created successfully.');
             }
         }

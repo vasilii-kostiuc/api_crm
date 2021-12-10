@@ -48,12 +48,13 @@ class ModularProvider extends ServiceProvider {
 
             });
         }
+        $this->app['view']->addNamespace('Pub', base_path().'/resources/views/Pub');
     }
 
     private function getWebRoutes(string $mod, string $sub, string $relativePath, string $path) {
         $routesPath = $path . $relativePath . '\Routes\web.php';
         if (file_exists($routesPath)) {
-            if ($mod != config('groupWithoutPrefix')) {
+            if ($mod != config('modular.groupWithoutPrefix')) {
                 Route::group(
                     [
                         'prefix' => strtolower($mod),
