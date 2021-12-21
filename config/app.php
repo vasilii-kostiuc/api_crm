@@ -175,7 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-        App\Providers\ModularProvider::class
+        App\Providers\ModularProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
     ],
 
     /*
