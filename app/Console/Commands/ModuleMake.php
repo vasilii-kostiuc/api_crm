@@ -247,7 +247,7 @@ class ModuleMake extends Command {
                 ],
                 $stub
             );
-            $this->files->put($path, $stub);
+            $this->filesystem->put($path, $stub);
             $this->info('Vue component created succesfully!');
         }
 
