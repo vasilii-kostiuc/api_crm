@@ -123,8 +123,9 @@ class ModuleMake extends Command {
 
             $this->filesystem->put($path, $stub);
             $this->info('Controller created succesgully.');
-            //$this->updateModularConfig()
         }
+        $this->updateModularConfig();
+
         $this->createRoutes($controller, $modelName);
 
     }
@@ -161,8 +162,9 @@ class ModuleMake extends Command {
 
             $this->filesystem->put($path, $stub);
             $this->info('Controller created succesgully.');
-            //$this->updateModularConfig()
+
         }
+        $this->updateModularConfig();
         $this->createApiRoutes($controller, $modelName);
     }
 
@@ -243,7 +245,7 @@ class ModuleMake extends Command {
                     'DummyClass',
                 ],
                 [
-                    $component
+                    $component,
                 ],
                 $stub
             );
@@ -252,8 +254,8 @@ class ModuleMake extends Command {
         }
 
     }
-    private function createView()
-    {
+
+    private function createView() {
         $paths = $this->getViewPath($this->argument('name'));
 
         foreach ($paths as $path) {
@@ -281,13 +283,11 @@ class ModuleMake extends Command {
         }
     }
 
-    protected function getVueComponentPath($name) : String
-    {
-        return base_path('resources/js/components/'.str_replace('\\', '/', $name).".vue");
+    protected function getVueComponentPath($name): string {
+        return base_path('resources/js/components/' . str_replace('\\', '/', $name) . ".vue");
     }
 
-    protected function getViewPath($name) : object
-    {
+    protected function getViewPath($name): object {
 
         $arrFiles = collect([
             'create',
@@ -297,8 +297,8 @@ class ModuleMake extends Command {
         ]);
 
         //str_replace('\\', '/', $name)
-        $paths = $arrFiles->map(function($item) use ($name){
-            return base_path('resources/views/'.str_replace('\\', '/', $name).'/'.$item.".blade.php");
+        $paths = $arrFiles->map(function ($item) use ($name) {
+            return base_path('resources/views/' . str_replace('\\', '/', $name) . '/' . $item . ".blade.php");
         });
 
         return $paths;
@@ -334,5 +334,27 @@ class ModuleMake extends Command {
 
     private function alreadyExists(string $routePath) {
         return $this->filesystem->exists($routePath);
+    }
+
+    private function updateModularConfig() {
+        $group = explode('\\', $this->argument('name'))[0];
+        $module = Str::studly(class_basename($this->argument('name')));
+
+        $modular = $this->filesystem->get(base_path('config/modular.php'));
+
+        $matches = [];
+
+        preg_match("/'modules' => \[.*?'{$group}' => \[(.*?)\]/s", $modular, $matches);
+
+        if(count($matches) == 2) {
+            if(!preg_match("/'{$module}'/", $matches[1])) {
+                $parts = preg_split("/('modules' => \[.*?'{$group}' => \[)/s", $modular, 2, PREG_SPLIT_DELIM_CAPTURE);
+                if(count($parts) == 3) {
+                    $configStr = $parts[0].$parts[1]."\n            '$module',".$parts[2];
+                    $this->filesystem->put(base_path('config/modular.php'), $configStr);
+                }
+            }
+        }
+
     }
 }
