@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,6 +81,7 @@ return [
     */
 
     'locale' => 'en',
+    'locales' => ['ru', 'en'],
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\ModularProvider::class,
+        App\Services\Localization\LocalizationServiceProvider::class,
         Laravel\Passport\PassportServiceProvider::class,
     ],
 

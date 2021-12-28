@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Localization\Localization;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,10 +24,9 @@ class ModularProvider extends ServiceProvider {
     public function boot() {
         $modules = config('modular.modules');
         $path = config('modular.path');
-
         if ($modules) {
             Route::group([
-                'prefix' => '',
+                'prefix' => Localization::locale(),
             ], function () use ($modules, $path) {
                 foreach ($modules as $mod => $submodules) {
                     foreach ($submodules as $key => $sub) {
@@ -48,7 +48,8 @@ class ModularProvider extends ServiceProvider {
 
             });
         }
-        $this->app['view']->addNamespace('Pub', base_path().'/resources/views/Pub');
+        $this->app['view']->addNamespace('Pub', base_path() . '/resources/views/Pub');
+        $this->app['view']->addNamespace('Admin', base_path() . '/resources/views/Admin');
     }
 
     private function getWebRoutes(string $mod, string $sub, string $relativePath, string $path) {
