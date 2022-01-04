@@ -12,6 +12,7 @@ namespace app\Modules\Admin\Dashboard\Controllers;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Lavary\Menu\Menu;
 
 class BaseDashboardController extends \App\Http\Controllers\Controller {
 
@@ -44,8 +45,10 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
     protected function renderOutput() {
         $this->vars = Arr::add($this->vars, 'content', $this->content);
 
+        $menu = $this->getMenu();
+
         $this->sidebar = view('Admin::layouts.parts.sidebar')->with([
-                'menu' => '',
+                'menu' => $menu,
                 'user' => Auth::user(),
             ]
         )->render();
@@ -57,6 +60,9 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
 
     private function getMenu() {
 
+        return Menu::make('menuRenderer', function (){
+
+        });
     }
 
 }
