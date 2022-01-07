@@ -4,6 +4,7 @@ namespace App\Modules\Admin\Menu\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Modules\Admin\User\Models\User;
 
 class Menu extends Model
 {
@@ -20,7 +21,6 @@ class Menu extends Model
 //        })
         ;
     }
-
 
     public static function scopeMenuByType($query, $type){
         return $query->where('type', $type)->orderBy('sort_order');

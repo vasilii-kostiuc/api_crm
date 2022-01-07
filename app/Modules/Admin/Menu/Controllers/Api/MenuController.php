@@ -13,12 +13,12 @@ class MenuController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return ResponseService::sendJsonResponse(true, 200, [],[
-            'menu' =>Menu::scopeFrontMenu(Auth::user())->get()->toArray()
+        return ResponseService::sendJsonResponse(true, 200,[], [
+            'menu' => (Menu::frontMenu(Auth::user())->get())->toArray()
         ]);
     }
 

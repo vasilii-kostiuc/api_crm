@@ -9,10 +9,11 @@
 namespace app\Modules\Admin\Dashboard\Controllers;
 
 
+use App\Modules\Admin\Menu\Models\Menu as MenuModel;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
-use Lavary\Menu\Menu;
+use Menu;
 
 class BaseDashboardController extends \App\Http\Controllers\Controller {
 
@@ -46,7 +47,6 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
         $this->vars = Arr::add($this->vars, 'content', $this->content);
 
         $menu = $this->getMenu();
-
         $this->sidebar = view('Admin::layouts.parts.sidebar')->with([
                 'menu' => $menu,
                 'user' => Auth::user(),
@@ -60,9 +60,32 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
 
     private function getMenu() {
 
-        return Menu::make('menuRenderer', function (){
-
+        return Menu::make('menuDashboard', function ($menu) {
+            $routes = \Route::getRoutes()->getRoutes();
+            foreach (MenuModel::menuByType(MenuModel::MENU_TYPE_BACKENND)->get() as $item) {
+                $path = $item->path;
+                if ($path && $this->checkRoute($routes, $path)) {
+                    $path = route($path);
+                }
+                if($item->parent == 0){
+                    $menu->add($item->title, $path)->id($item->id)->data('permissions', []);
+                }else{
+                    if($menu->find($item->parent)){
+                        $menu->find($item->parent)->add($item->title, $path)->id($item->id)->data('permissions', []);
+                    }
+                }
+            }
+        })->filter(function($item){
+            // to do
+            return true;
         });
     }
 
+    private function checkRoute($routes, $path) {
+        foreach ($routes as $route) {
+            if($route->getName() == $path){
+                return true;
+            }
+        }
+    }
 }
