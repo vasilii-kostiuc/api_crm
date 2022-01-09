@@ -6,7 +6,7 @@
  * Created on: 26.12.2021 12:31
  */
 
-namespace app\Modules\Admin\Dashboard\Controllers;
+namespace App\Modules\Admin\Dashboard\Controllers;
 
 
 use App\Modules\Admin\Menu\Models\Menu as MenuModel;
@@ -30,6 +30,8 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
     protected $vars;
 
     protected $locale;
+
+    protected $service;
 
     public function __construct() {
         $this->middleware('auth');
