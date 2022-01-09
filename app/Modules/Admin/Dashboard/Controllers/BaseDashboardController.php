@@ -70,16 +70,18 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
                     $path = route($path);
                 }
                 if($item->parent == 0){
-                    $menu->add($item->title, $path)->id($item->id)->data('permissions', []);
+                    $menu->add($item->title, $path)->id($item->id)->data('permissions', $this->getPermissions($item));
                 }else{
                     if($menu->find($item->parent)){
-                        $menu->find($item->parent)->add($item->title, $path)->id($item->id)->data('permissions', []);
+                        $menu->find($item->parent)->add($item->title, $path)->id($item->id)->data('permissions', $this->getPermissions($item));
                     }
                 }
             }
         })->filter(function($item){
-            // to do
-            return true;
+            if($this->user->canDo($item->data('permissions'))) {
+                return true;
+            }
+            return false;
         });
     }
 
@@ -89,5 +91,11 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
                 return true;
             }
         }
+    }
+
+    private function getPermissions($item){
+        return $item->perms->map(function ($item){
+           return $item->alias;
+        })->toArray();
     }
 }

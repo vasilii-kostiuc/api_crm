@@ -5,8 +5,7 @@ namespace App\Modules\Admin\Role\Policies;
 use App\Modules\Admin\User\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class RolePolicy
-{
+class RolePolicy {
     use HandlesAuthorization;
 
     /**
@@ -14,24 +13,23 @@ class RolePolicy
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //
     }
 
-    public function view():bool{
-        return true;
+    public function view(User $user): bool {
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function create():bool{
-        return true;
+    public function create(User $user): bool {
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function edit():bool{
-        return true;
+    public function edit(User $user): bool {
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function delete():bool{
-        return true;
+    public function delete(User $user): bool {
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 }

@@ -19,19 +19,19 @@ class PermissionPolicy
         //
     }
 
-    public function view():bool{
-        return true;
+    public function view(User $user):bool{
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function create():bool{
-        return true;
+    public function create(User $user):bool{
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function edit():bool{
-        return true;
+    public function edit(User $user):bool{
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 
-    public function delete():bool{
-        return true;
+    public function delete(User $user):bool{
+        return $user->canDo(['SUPER_ADMINISTRATOR', 'ROLES_ACCESS']);
     }
 }

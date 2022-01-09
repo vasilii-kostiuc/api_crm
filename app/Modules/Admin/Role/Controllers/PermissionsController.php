@@ -22,7 +22,7 @@ class PermissionsController extends BaseDashboardController
      */
     public function index()
     {
-        $this->authorize('view', Permission::class);
+        $this->authorize('view', Role::class);
 
         $permissions = Permission::all();
         $roles = Role::all();
