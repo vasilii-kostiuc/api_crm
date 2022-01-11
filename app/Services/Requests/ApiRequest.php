@@ -27,7 +27,6 @@ class ApiRequest extends FormRequest {
                 false,
                 JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
                 $errors
-
             )
         );
     }
