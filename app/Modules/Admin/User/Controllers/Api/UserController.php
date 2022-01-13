@@ -93,8 +93,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->status = 0;
+        $user->update();
+        return ResponseService::sendJsonResponse(true, 200, [], $user->toArray());
+    }
+
+    public function usersForm(){
+        $this->authorize('view', User::class);
+
+        $users = $this->service->getUsers(1);
+
+        return ResponseService::sendJsonResponse(true, 200, [], $users->toArray());
     }
 }

@@ -17,8 +17,12 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserService {
 
-    public function getUsers() {
-        $users = User::with('roles')->get();
+    public function getUsers($status = false) {
+        $usersBuilder = User::with('roles')->get();
+        if($status){
+            $usersBuilder->where('status', (string)$status);
+        }
+        $users =$usersBuilder->get();
         $users->transform(function ($item) {
             $item->rolename = '';
             if (isset($item->roles)) {
