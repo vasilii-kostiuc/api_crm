@@ -52,7 +52,7 @@ class UserController extends Controller
     {
         $user = $this->service->save($request, new User());
 
-        return ResponseService::sendJsonResponse(true, 200, [], $user);
+        return ResponseService::sendJsonResponse(true, 200, [], $user->toArray());
     }
 
     /**
@@ -75,15 +75,17 @@ class UserController extends Controller
         //
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, User $user)
     {
-        //
+        $user = $this->service->save($request, $user);
+
+        return ResponseService::sendJsonResponse(true, 200, [], $user->toArray());
     }
 
     /**

@@ -12,6 +12,7 @@ namespace App\Modules\Admin\User\Serices;
 use App\Modules\Admin\Role\Models\Role;
 use App\Modules\Admin\User\Models\User;
 use App\Modules\Admin\User\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserService {
@@ -31,12 +32,12 @@ class UserService {
     }
 
     public function save(UserRequest $request, User $user) {
-        $user->fill($request->only([$user->getFillable()]));
-        $user->password =Has::make($request->password);
+        $user->fill($request->only($user->getFillable()));
+        $user->password = Hash::make($request->password);
         $user->status = 1;
         $user->save();
         $role = Role::findOrFail($request->role_id);
-        $user->roles()->attach($role->id);
+        $user->roles()->sync($role->id);
         $user->rolename = $role->title;
         return $user;
     }
