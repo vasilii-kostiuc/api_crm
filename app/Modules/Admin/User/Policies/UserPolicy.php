@@ -8,7 +8,6 @@
 
 namespace App\Modules\Admin\User\Policies;
 
-
 use App\Modules\Admin\User\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 

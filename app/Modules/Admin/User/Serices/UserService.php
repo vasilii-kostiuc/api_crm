@@ -8,7 +8,6 @@
 
 namespace App\Modules\Admin\User\Serices;
 
-
 use App\Modules\Admin\Role\Models\Role;
 use App\Modules\Admin\User\Models\User;
 use App\Modules\Admin\User\Requests\UserRequest;
