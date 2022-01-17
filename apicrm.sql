@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 12 2022 г., 01:30
+-- Время создания: Янв 18 2022 г., 00:27
 -- Версия сервера: 10.3.29-MariaDB
 -- Версия PHP: 7.4.21
 
@@ -28,14 +28,46 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+                               `id` bigint(20) UNSIGNED NOT NULL,
+                               `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `leads`
+--
+
+CREATE TABLE `leads` (
+                         `id` bigint(20) UNSIGNED NOT NULL,
+                         `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `count_create` int(11) NOT NULL DEFAULT 1,
+                         `is_processed` tinyint(1) NOT NULL DEFAULT 0,
+                         `isQualityLead` tinyint(1) NOT NULL DEFAULT 0,
+                         `is_express_delivery` tinyint(1) NOT NULL DEFAULT 0,
+                         `is_add_sale` tinyint(1) NOT NULL DEFAULT 0,
+                         `source_id` bigint(20) UNSIGNED DEFAULT NULL,
+                         `unit_id` bigint(20) UNSIGNED DEFAULT NULL,
+                         `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+                         `status_id` bigint(20) UNSIGNED DEFAULT NULL,
+                         `created_at` timestamp NULL DEFAULT NULL,
+                         `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `leads`
+--
+
+INSERT INTO `leads` (`id`, `phone`, `link`, `count_create`, `is_processed`, `isQualityLead`, `is_express_delivery`, `is_add_sale`, `source_id`, `unit_id`, `user_id`, `status_id`, `created_at`, `updated_at`) VALUES
+(1, '1111111111111', 'http://link.link', 1, 0, 0, 0, 0, 1, 1, 2, 1, '2022-01-17 20:27:36', NULL),
+(2, '1111111111111', 'http://link.link', 1, 0, 0, 0, 0, 1, 1, 2, 1, '2022-01-17 20:27:36', NULL),
+(3, '231321312', 'http://google.com', 1, 0, 0, 0, 0, 1, 1, 1, 1, '2022-01-17 19:23:37', '2022-01-17 19:23:37');
 
 -- --------------------------------------------------------
 
@@ -44,14 +76,14 @@ CREATE TABLE `failed_jobs` (
 --
 
 CREATE TABLE `menus` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sort_order` int(11) NOT NULL DEFAULT 10,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                         `id` bigint(20) UNSIGNED NOT NULL,
+                         `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `path` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `parent` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `sort_order` int(11) NOT NULL DEFAULT 10,
+                         `created_at` timestamp NULL DEFAULT NULL,
+                         `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -83,9 +115,9 @@ INSERT INTO `menus` (`id`, `title`, `path`, `parent`, `type`, `sort_order`, `cre
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
+                              `id` int(10) UNSIGNED NOT NULL,
+                              `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                              `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -106,7 +138,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (11, '2022_01_07_204309_create_roles_table', 5),
 (12, '2022_01_07_211348_create_permissions', 5),
 (13, '2022_01_07_211450_create_role_permissions', 5),
-(14, '2022_01_09_175251_add_permission_menu_table', 6);
+(14, '2022_01_09_175251_add_permission_menu_table', 6),
+(15, '2022_01_14_151859_create_sources_table', 7),
+(16, '2020_12_27_084610_create_statuses_table', 8),
+(17, '2020_12_27_084612_c_reate_units_t_able', 8),
+(18, '2022_01_14_202549_create_leads_table', 8);
 
 -- --------------------------------------------------------
 
@@ -115,15 +151,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `client_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `expires_at` datetime DEFAULT NULL
+                                       `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                       `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+                                       `client_id` bigint(20) UNSIGNED NOT NULL,
+                                       `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                       `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                       `revoked` tinyint(1) NOT NULL,
+                                       `created_at` timestamp NULL DEFAULT NULL,
+                                       `updated_at` timestamp NULL DEFAULT NULL,
+                                       `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -143,12 +179,12 @@ INSERT INTO `oauth_access_tokens` (`id`, `user_id`, `client_id`, `name`, `scopes
 --
 
 CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `client_id` bigint(20) UNSIGNED NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime DEFAULT NULL
+                                    `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                    `user_id` bigint(20) UNSIGNED NOT NULL,
+                                    `client_id` bigint(20) UNSIGNED NOT NULL,
+                                    `scopes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                    `revoked` tinyint(1) NOT NULL,
+                                    `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -158,17 +194,17 @@ CREATE TABLE `oauth_auth_codes` (
 --
 
 CREATE TABLE `oauth_clients` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `personal_access_client` tinyint(1) NOT NULL,
-  `password_client` tinyint(1) NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                                 `id` bigint(20) UNSIGNED NOT NULL,
+                                 `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+                                 `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                 `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                 `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                 `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+                                 `personal_access_client` tinyint(1) NOT NULL,
+                                 `password_client` tinyint(1) NOT NULL,
+                                 `revoked` tinyint(1) NOT NULL,
+                                 `created_at` timestamp NULL DEFAULT NULL,
+                                 `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -186,10 +222,10 @@ INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `red
 --
 
 CREATE TABLE `oauth_personal_access_clients` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `client_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                                                 `id` bigint(20) UNSIGNED NOT NULL,
+                                                 `client_id` bigint(20) UNSIGNED NOT NULL,
+                                                 `created_at` timestamp NULL DEFAULT NULL,
+                                                 `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -206,10 +242,10 @@ INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `u
 --
 
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime DEFAULT NULL
+                                        `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                        `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                        `revoked` tinyint(1) NOT NULL,
+                                        `expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -219,9 +255,9 @@ CREATE TABLE `oauth_refresh_tokens` (
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+                                   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -231,11 +267,11 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `permissions` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                               `id` int(10) UNSIGNED NOT NULL,
+                               `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                               `created_at` timestamp NULL DEFAULT NULL,
+                               `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -244,7 +280,14 @@ CREATE TABLE `permissions` (
 
 INSERT INTO `permissions` (`id`, `alias`, `title`, `created_at`, `updated_at`) VALUES
 (1, 'SUPER_ADMINISTRATOR', 'Super Admin Permission', NULL, NULL),
-(2, 'ROLES_ACCESS', 'Role Access', NULL, NULL);
+(2, 'ROLES_ACCESS', 'Role Access', NULL, NULL),
+(3, 'SOURCES_ACCESS', 'SOURCES ACCESS', NULL, NULL),
+(4, 'LEADS_ACCESS', 'LEADS_ACCESS', NULL, NULL),
+(5, 'LEADS_EDIT', 'LEADS EDIT', NULL, NULL),
+(8, 'LEADS_CREATE', 'LEADS_CREATE', NULL, NULL),
+(9, 'DASHBOARD_ACCESS', 'DASHBOARD ACCESS', NULL, NULL),
+(10, 'LEADS_CREATE', 'LEADS_CREATE', NULL, NULL),
+(11, 'DASHBOARD_ACCESS', 'DASHBOARD ACCESS', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -253,8 +296,8 @@ INSERT INTO `permissions` (`id`, `alias`, `title`, `created_at`, `updated_at`) V
 --
 
 CREATE TABLE `permission_menu` (
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `menu_id` bigint(20) UNSIGNED NOT NULL
+                                   `permission_id` int(10) UNSIGNED NOT NULL,
+                                   `menu_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -276,11 +319,11 @@ INSERT INTO `permission_menu` (`permission_id`, `menu_id`) VALUES
 --
 
 CREATE TABLE `permission_role` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `role_id` int(10) UNSIGNED NOT NULL,
-  `permission_id` int(10) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                                   `id` int(10) UNSIGNED NOT NULL,
+                                   `role_id` int(10) UNSIGNED NOT NULL,
+                                   `permission_id` int(10) UNSIGNED NOT NULL,
+                                   `created_at` timestamp NULL DEFAULT NULL,
+                                   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -299,15 +342,15 @@ INSERT INTO `permission_role` (`id`, `role_id`, `permission_id`, `created_at`, `
 --
 
 CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `last_used_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                                          `id` bigint(20) UNSIGNED NOT NULL,
+                                          `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                          `tokenable_id` bigint(20) UNSIGNED NOT NULL,
+                                          `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                          `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+                                          `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                                          `last_used_at` timestamp NULL DEFAULT NULL,
+                                          `created_at` timestamp NULL DEFAULT NULL,
+                                          `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -317,11 +360,11 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `roles` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                         `id` int(10) UNSIGNED NOT NULL,
+                         `alias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `created_at` timestamp NULL DEFAULT NULL,
+                         `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -339,11 +382,11 @@ INSERT INTO `roles` (`id`, `alias`, `title`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `role_user` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `role_id` int(10) UNSIGNED DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                             `id` int(10) UNSIGNED NOT NULL,
+                             `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+                             `role_id` int(10) UNSIGNED DEFAULT NULL,
+                             `created_at` timestamp NULL DEFAULT NULL,
+                             `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -351,7 +394,78 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, NULL, NULL);
+(1, 1, 2, NULL, NULL),
+(2, 2, 3, NULL, NULL),
+(3, 4, 3, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `sources`
+--
+
+CREATE TABLE `sources` (
+                           `id` bigint(20) UNSIGNED NOT NULL,
+                           `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                           `created_at` timestamp NULL DEFAULT NULL,
+                           `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `sources`
+--
+
+INSERT INTO `sources` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'Instagram', NULL, NULL),
+(2, 'Viber', NULL, NULL),
+(3, 'Site', NULL, NULL),
+(4, 'Phone', NULL, NULL),
+(6, 'whatsapp', '2022-01-14 14:23:49', '2022-01-14 14:24:52');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `statuses`
+--
+
+CREATE TABLE `statuses` (
+                            `id` bigint(20) UNSIGNED NOT NULL,
+                            `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                            `title_ru` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                            `created_at` timestamp NULL DEFAULT NULL,
+                            `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `title`, `title_ru`, `created_at`, `updated_at`) VALUES
+(1, 'new', 'Новые заявки', NULL, NULL),
+(2, 'process', 'В работе', NULL, NULL),
+(3, 'done', 'Выполнено', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `units`
+--
+
+CREATE TABLE `units` (
+                         `id` bigint(20) UNSIGNED NOT NULL,
+                         `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `created_at` timestamp NULL DEFAULT NULL,
+                         `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `units`
+--
+
+INSERT INTO `units` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(1, 'Shop 1', NULL, NULL),
+(2, 'Shop 2', NULL, NULL),
+(3, 'Shop 3', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -360,15 +474,15 @@ INSERT INTO `role_user` (`id`, `user_id`, `role_id`, `created_at`, `updated_at`)
 --
 
 CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+                         `id` bigint(20) UNSIGNED NOT NULL,
+                         `firstname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `lastname` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                         `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                         `status` enum('0','1') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+                         `created_at` timestamp NULL DEFAULT NULL,
+                         `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -376,7 +490,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `phone`, `password`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin@admin.com', '11111111', '$2y$10$/OdstdT0p6Fg10GQmEzt1uLNuQeM6hpUBZM.hNDIQR3ZXBha8rKXm', '0', NULL, NULL);
+(1, 'admin', 'admin', 'admin@admin.com', '11111111', '$2y$10$/OdstdT0p6Fg10GQmEzt1uLNuQeM6hpUBZM.hNDIQR3ZXBha8rKXm', '0', NULL, NULL),
+(2, 'Manager', 'Manager', 'manager@manager.com', '1234567890', '$2y$10$AwH/saBOyZluIxxGY/yzjeHkd95WvRLZzm2P1XneYJS4mtFhrEw2e', '0', '2022-01-12 17:03:10', '2022-01-12 17:03:10'),
+(4, 'Manager', 'Manager', 'manage121r@manager.com', '1234567890', '$2y$10$i/w4/o/XmdCHc286BNwPMOq2VzX9Uz/6.VD36VGpYAwEAVLsexx4a', '0', '2022-01-12 17:04:03', '2022-01-12 17:05:28');
 
 --
 -- Индексы сохранённых таблиц
@@ -386,79 +502,89 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `phone`, `password`
 -- Индексы таблицы `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Индексы таблицы `leads`
+--
+ALTER TABLE `leads`
+    ADD PRIMARY KEY (`id`),
+  ADD KEY `leads_source_id_foreign` (`source_id`),
+  ADD KEY `leads_unit_id_foreign` (`unit_id`),
+  ADD KEY `leads_user_id_foreign` (`user_id`),
+  ADD KEY `leads_status_id_foreign` (`status_id`);
 
 --
 -- Индексы таблицы `menus`
 --
 ALTER TABLE `menus`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `oauth_access_tokens`
 --
 ALTER TABLE `oauth_access_tokens`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
 
 --
 -- Индексы таблицы `oauth_auth_codes`
 --
 ALTER TABLE `oauth_auth_codes`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
 
 --
 -- Индексы таблицы `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `oauth_clients_user_id_index` (`user_id`);
 
 --
 -- Индексы таблицы `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `oauth_refresh_tokens`
 --
 ALTER TABLE `oauth_refresh_tokens`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
 
 --
 -- Индексы таблицы `password_resets`
 --
 ALTER TABLE `password_resets`
-  ADD KEY `password_resets_email_index` (`email`);
+    ADD KEY `password_resets_email_index` (`email`);
 
 --
 -- Индексы таблицы `permissions`
 --
 ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `permission_menu`
 --
 ALTER TABLE `permission_menu`
-  ADD KEY `permission_menu_permission_id_foreign` (`permission_id`),
+    ADD KEY `permission_menu_permission_id_foreign` (`permission_id`),
   ADD KEY `permission_menu_menu_id_foreign` (`menu_id`);
 
 --
 -- Индексы таблицы `permission_role`
 --
 ALTER TABLE `permission_role`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `permission_role_role_id_foreign` (`role_id`),
   ADD KEY `permission_role_permission_id_foreign` (`permission_id`);
 
@@ -466,7 +592,7 @@ ALTER TABLE `permission_role`
 -- Индексы таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
@@ -474,21 +600,39 @@ ALTER TABLE `personal_access_tokens`
 -- Индексы таблицы `roles`
 --
 ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `role_user`
 --
 ALTER TABLE `role_user`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD KEY `role_user_role_id_foreign` (`role_id`),
   ADD KEY `role_user_user_id_foreign` (`user_id`);
+
+--
+-- Индексы таблицы `sources`
+--
+ALTER TABLE `sources`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `statuses`
+--
+ALTER TABLE `statuses`
+    ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `units`
+--
+ALTER TABLE `units`
+    ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
+    ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
@@ -499,91 +643,124 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT для таблицы `leads`
+--
+ALTER TABLE `leads`
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `menus`
 --
 ALTER TABLE `menus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `oauth_clients`
 --
 ALTER TABLE `oauth_clients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `oauth_personal_access_clients`
 --
 ALTER TABLE `oauth_personal_access_clients`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `permission_role`
 --
 ALTER TABLE `permission_role`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `role_user`
 --
 ALTER TABLE `role_user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `sources`
+--
+ALTER TABLE `sources`
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT для таблицы `statuses`
+--
+ALTER TABLE `statuses`
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT для таблицы `units`
+--
+ALTER TABLE `units`
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
 
 --
+-- Ограничения внешнего ключа таблицы `leads`
+--
+ALTER TABLE `leads`
+    ADD CONSTRAINT `leads_source_id_foreign` FOREIGN KEY (`source_id`) REFERENCES `sources` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leads_status_id_foreign` FOREIGN KEY (`status_id`) REFERENCES `statuses` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leads_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leads_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `permission_menu`
 --
 ALTER TABLE `permission_menu`
-  ADD CONSTRAINT `permission_menu_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `permission_menu_menu_id_foreign` FOREIGN KEY (`menu_id`) REFERENCES `menus` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `permission_menu_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `permission_role`
 --
 ALTER TABLE `permission_role`
-  ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `permission_role_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `permission_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 --
 -- Ограничения внешнего ключа таблицы `role_user`
 --
 ALTER TABLE `role_user`
-  ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
