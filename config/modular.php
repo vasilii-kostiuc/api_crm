@@ -12,6 +12,8 @@ return [
     ],
     'modules' => [
         'Admin' => [
+            'Lead',
+            'LeadComment',
             'Sources',
             'Role',
             'Menu',
