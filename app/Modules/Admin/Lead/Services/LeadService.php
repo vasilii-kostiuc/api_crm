@@ -10,6 +10,7 @@ namespace App\Modules\Admin\Lead\Services;
 
 
 use App\Modules\Admin\Lead\Models\Lead;
+use App\Modules\Admin\LeadComment\Services\LeadCommentService;
 use App\Modules\Admin\Status\Models\Status;
 use App\Modules\Admin\Lead\Requests\LeadCreateRequest;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -45,6 +46,22 @@ class LeadService
 
         $user->leads()->save($lead);
 
+        $this->addStoreComments($lead, $request);
+
         return $lead;
+    }
+
+    private function addStoreComments($lead, $request, $user, $status)
+    {
+        $is_event = true;
+        $tmpText = "Автор <strong>".$user->fullname.'</strong> создал лид со статусом '.$status->title_ru;
+        LeadCommentService::saveComment($tmpText, $lead, $user, $status, null, $is_event);
+
+        if($request->text) {
+            $is_event = false;
+            $tmpText = "Пользователь <strong>".$user->fullname.'</strong> оставил комментарий '.$request->text;
+            LeadCommentService::saveComment($tmpText, $lead, $user, $status, $request->text, $is_event);
+        }
+
     }
 }
