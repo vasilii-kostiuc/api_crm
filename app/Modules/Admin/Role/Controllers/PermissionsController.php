@@ -11,10 +11,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class PermissionsController extends BaseDashboardController
 {
-    public function __construct(PermissionService $service) {
+    public function __construct(PermissionService $service)
+    {
         parent::__construct();
         $this->service = $service;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +29,15 @@ class PermissionsController extends BaseDashboardController
         $permissions = Permission::all();
         $roles = Role::all();
         $this->title = "Permissions";
-        $this->content = view('Admin::Permission.index')->with(['perms'=>$permissions,'roles' => $roles, 'title' => $this->title]);
-        return $this->renderOutput();
+        $this->content = view('Admin::Permission.index')->with(
+            [
+                'perms' => $permissions,
+                'roles' => $roles,
+                'title' => $this->title,
+            ]
+        );
 
+        return $this->renderOutput();
     }
 
     /**
@@ -45,7 +53,8 @@ class PermissionsController extends BaseDashboardController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -55,14 +64,15 @@ class PermissionsController extends BaseDashboardController
         $this->service->save($request);
 
         return back()->with([
-            'message' => __('Success')
+            'message' => __('Success'),
         ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -73,7 +83,8 @@ class PermissionsController extends BaseDashboardController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -84,8 +95,9 @@ class PermissionsController extends BaseDashboardController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int                      $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -96,7 +108,8 @@ class PermissionsController extends BaseDashboardController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

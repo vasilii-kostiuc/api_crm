@@ -28,17 +28,23 @@ class CreateLeadsTable extends Migration
 
 
             $table->bigInteger('source_id')->nullable()->unsigned();
-            $table->foreign('source_id')->references('id')->on('sources')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('sources')
+                ->onDelete('cascade');
 
             $table->bigInteger('unit_id')->nullable()->unsigned();
-            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete(
+                'cascade'
+            );
 
             $table->bigInteger('user_id')->nullable()->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete(
+                'cascade'
+            );
 
 
             $table->bigInteger('status_id')->nullable()->unsigned();
-            $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
+            $table->foreign('status_id')->references('id')->on('statuses')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

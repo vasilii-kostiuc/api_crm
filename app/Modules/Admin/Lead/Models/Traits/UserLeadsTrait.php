@@ -12,20 +12,23 @@ namespace App\Modules\Admin\Lead\Models\Traits;
 use App\Modules\Admin\Lead\Models\Lead;
 use App\Modules\Admin\LeadComment\Models\LeadComment;
 
-trait UserLeadsTrait {
-    public function leads(){
+trait UserLeadsTrait
+{
+    public function leads()
+    {
         return $this->hasMany(Lead::class);
     }
 
-    public function tasks(){
-
+    public function tasks()
+    {
     }
 
-    public function responsibleTasks(){
-
+    public function responsibleTasks()
+    {
     }
 
-    public function comments(){
+    public function comments()
+    {
         return $this->hasMany(LeadComment::class);
     }
 

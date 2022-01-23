@@ -5,13 +5,15 @@ namespace App\Modules\Admin\Lead\Seeds;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UnitTable extends Seeder {
+class UnitTable extends Seeder
+{
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         //
         DB::table('units')->insert([
             ['title' => 'Shop 1'],

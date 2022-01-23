@@ -12,10 +12,20 @@ Route::group(['prefix' => 'roles', 'middleware' => []], function () {
 
 Route::group(['prefix' => 'permissions', 'middleware' => []], function () {
     Route::get('/', 'PermissionsController@index')->name('permissions.index');
-    Route::get('/create', 'PermissionsController@create')->name('permissions.create');
+    Route::get('/create', 'PermissionsController@create')->name(
+        'permissions.create'
+    );
     Route::post('/', 'PermissionsController@store')->name('permissions.store');
-    Route::get('/{role}', 'PermissionsController@show')->name('permissions.read');
-    Route::get('/edit/{role}', 'PermissionsController@edit')->name('permissions.edit');
-    Route::put('/{role}', 'PermissionsController@update')->name('permissions.update');
-    Route::delete('/{role}', 'PermissionsController@destroy')->name('permissions.delete');
+    Route::get('/{role}', 'PermissionsController@show')->name(
+        'permissions.read'
+    );
+    Route::get('/edit/{role}', 'PermissionsController@edit')->name(
+        'permissions.edit'
+    );
+    Route::put('/{role}', 'PermissionsController@update')->name(
+        'permissions.update'
+    );
+    Route::delete('/{role}', 'PermissionsController@destroy')->name(
+        'permissions.delete'
+    );
 });

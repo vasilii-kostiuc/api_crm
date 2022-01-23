@@ -25,11 +25,11 @@ class LeadCreateRequest extends ApiRequest
     public function rules()
     {
         return [
-            'link' =>'required_without:phone',
-            'phone' =>'required_without:link',
-            'source_id' =>'required',
-            'unit_id' =>'required',
-            'is_processed' =>'required',
+            'link'         => 'required_without:phone',
+            'phone'        => 'required_without:link',
+            'source_id'    => 'required',
+            'unit_id'      => 'required',
+            'is_processed' => 'required',
         ];
     }
 }

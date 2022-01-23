@@ -3,6 +3,7 @@
 namespace App\Modules\Admin\Role\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+
 use const http\Client\Curl\AUTH_ANY;
 
 class RoleRequest extends FormRequest
@@ -27,7 +28,7 @@ class RoleRequest extends FormRequest
         return [
             //
             'title' => 'required',
-            'alias' => 'required'
+            'alias' => 'required',
         ];
     }
 }

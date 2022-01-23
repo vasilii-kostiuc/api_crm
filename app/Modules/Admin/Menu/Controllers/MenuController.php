@@ -31,7 +31,8 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +43,8 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Modules\Admin\Menu\Models\Menu  $menu
+     * @param \App\Modules\Admin\Menu\Models\Menu $menu
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Menu $menu)
@@ -53,7 +55,8 @@ class MenuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Modules\Admin\Menu\Models\Menu  $menu
+     * @param \App\Modules\Admin\Menu\Models\Menu $menu
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit(Menu $menu)
@@ -64,8 +67,9 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Modules\Admin\Menu\Models\Menu  $menu
+     * @param \Illuminate\Http\Request            $request
+     * @param \App\Modules\Admin\Menu\Models\Menu $menu
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Menu $menu)
@@ -76,7 +80,8 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Modules\Admin\Menu\Models\Menu  $menu
+     * @param \App\Modules\Admin\Menu\Models\Menu $menu
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Menu $menu)

@@ -17,8 +17,8 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return ResponseService::sendJsonResponse(true, 200,[], [
-            'menu' => (Menu::frontMenu(Auth::user())->get())->toArray()
+        return ResponseService::sendJsonResponse(true, 200, [], [
+            'menu' => (Menu::frontMenu(Auth::user())->get())->toArray(),
         ]);
     }
 
@@ -35,7 +35,8 @@ class MenuController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -66,7 +67,8 @@ class MenuController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)

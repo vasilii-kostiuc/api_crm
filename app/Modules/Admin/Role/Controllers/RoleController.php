@@ -10,14 +10,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 
-class RoleController extends BaseDashboardController {
+class RoleController extends BaseDashboardController
+{
 
     /**
      * RoleController constructor.
      *
      * @param RoleService $service
      */
-    public function __construct(RoleService $service) {
+    public function __construct(RoleService $service)
+    {
         parent::__construct();
         $this->service = $service;
     }
@@ -27,12 +29,16 @@ class RoleController extends BaseDashboardController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('view', Role::class);
 
         $roles = Role::all();
         $this->title = "Roles";
-        $this->content = view('Admin::Role.index')->with(['roles'=>$roles, 'title' => $this->title]);
+        $this->content = view('Admin::Role.index')->with(
+            ['roles' => $roles, 'title' => $this->title]
+        );
+
         return $this->renderOutput();
     }
 
@@ -41,11 +47,15 @@ class RoleController extends BaseDashboardController {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         $this->authorize('view', Role::class);
 
         $this->title = "Create Role";
-        $this->content = view('Admin::Role.create')->with(['title' => $this->title]);
+        $this->content = view('Admin::Role.create')->with(
+            ['title' => $this->title]
+        );
+
         return $this->renderOutput();
     }
 
@@ -53,13 +63,16 @@ class RoleController extends BaseDashboardController {
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request) {
+    public function store(RoleRequest $request)
+    {
         //
         $this->service->save($request, new Role());
+
         return Redirect::route('roles.index')->with([
-            'message' => __('Success')
+            'message' => __('Success'),
         ]);
     }
 
@@ -67,9 +80,11 @@ class RoleController extends BaseDashboardController {
      * Display the specified resource.
      *
      * @param \App\Modules\Admin\Role\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role) {
+    public function show(Role $role)
+    {
         //
     }
 
@@ -77,15 +92,18 @@ class RoleController extends BaseDashboardController {
      * Display the specified resource.
      *
      * @param \App\Modules\Admin\Role\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role) {
+    public function edit(Role $role)
+    {
         $this->authorize('edit', Role::class);
         $this->title = "Edit Role";
         $this->content = view('Admin::Role.edit')->with([
             'title' => $this->title,
-            'item' => $role
+            'item'  => $role,
         ]);
+
         return $this->renderOutput();
     }
 
@@ -94,13 +112,16 @@ class RoleController extends BaseDashboardController {
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Modules\Admin\Role\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleRequest $request, Role $role) {
+    public function update(RoleRequest $request, Role $role)
+    {
         //
         $this->service->save($request, $role);
+
         return Redirect::route('roles.index')->with([
-            'message' => __('Success')
+            'message' => __('Success'),
         ]);
     }
 
@@ -108,12 +129,15 @@ class RoleController extends BaseDashboardController {
      * Remove the specified resource from storage.
      *
      * @param \App\Modules\Admin\Role\Models\Role $role
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role) {
+    public function destroy(Role $role)
+    {
         $role->delete();
+
         return Redirect::route('roles.index')->with([
-            'message' => __('Success')
+            'message' => __('Success'),
         ]);
     }
 }

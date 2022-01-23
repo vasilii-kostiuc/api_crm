@@ -9,11 +9,13 @@ use App\Services\Response\ResponseService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
     private $service;
 
-    public function __construct(UserService $service) {
+    public function __construct(UserService $service)
+    {
         $this->service = $service;
     }
 
@@ -22,7 +24,8 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('view', User::class);
 
         $users = $this->service->getUsers();
@@ -37,7 +40,8 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -45,9 +49,11 @@ class UserController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request) {
+    public function store(UserRequest $request)
+    {
         $user = $this->service->save($request, new User());
 
         return ResponseService::sendJsonResponse(true, 200, [], [
@@ -60,7 +66,8 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -69,17 +76,20 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
 
     /**
      * @param UserRequest $request
-     * @param User $user
+     * @param User        $user
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(UserRequest $request, User $user) {
+    public function update(UserRequest $request, User $user)
+    {
         $user = $this->service->save($request, $user);
 
         return ResponseService::sendJsonResponse(true, 200, [], [
@@ -92,21 +102,24 @@ class UserController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user) {
+    public function destroy(User $user)
+    {
         $user->status = 0;
         $user->update();
-        return ResponseService::sendJsonResponse(true, 200, [],[
-            'item' => $user->toArray()
+
+        return ResponseService::sendJsonResponse(true, 200, [], [
+            'item' => $user->toArray(),
         ]);
     }
 
-    public function usersForm() {
+    public function usersForm()
+    {
         $this->authorize('view', User::class);
 
         $users = $this->service->getUsers(1);
 
         return ResponseService::sendJsonResponse(true, 200, [], [
-            'items' => $users->toArray()
+            'items' => $users->toArray(),
         ]);
     }
 }

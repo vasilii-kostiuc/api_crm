@@ -12,22 +12,24 @@ namespace App\Modules\Admin\Sources\Seeds;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class SourcesSeeds  extends Seeder {
+class SourcesSeeds extends Seeder
+{
 
-    public function run(){
+    public function run()
+    {
         DB::table('sources')->insert([
             [
-                'title' => 'Instagram'
+                'title' => 'Instagram',
             ],
             [
-                'title' => 'Viber'
+                'title' => 'Viber',
             ],
             [
-                'Site'
+                'Site',
             ],
             [
-                'Phone'
-            ]
+                'Phone',
+            ],
         ]);
     }
 }

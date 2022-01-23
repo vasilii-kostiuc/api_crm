@@ -14,18 +14,21 @@ use App\Modules\Admin\User\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
 
-class UserService {
+class UserService
+{
 
-    public function getUsers($status = false) {
+    public function getUsers($status = false)
+    {
         $usersBuilder = User::with('roles')->get();
-        if($status){
+        if ($status) {
             $usersBuilder->where('status', (string)$status);
         }
-        $users =$usersBuilder->get();
+        $users = $usersBuilder->get();
         $users->transform(function ($item) {
             $item->rolename = '';
             if (isset($item->roles)) {
-                $item->rolename = isset($item->roles->first()->title) ? $item->roles->first()->title : '';
+                $item->rolename = isset($item->roles->first()->title)
+                    ? $item->roles->first()->title : '';
             }
 
             return $item;
@@ -34,7 +37,8 @@ class UserService {
         return $users;
     }
 
-    public function save(UserRequest $request, User $user) {
+    public function save(UserRequest $request, User $user)
+    {
         $user->fill($request->only($user->getFillable()));
         $user->password = Hash::make($request->password);
         $user->status = 1;
@@ -42,6 +46,7 @@ class UserService {
         $role = Role::findOrFail($request->role_id);
         $user->roles()->sync($role->id);
         $user->rolename = $role->title;
+
         return $user;
     }
 }

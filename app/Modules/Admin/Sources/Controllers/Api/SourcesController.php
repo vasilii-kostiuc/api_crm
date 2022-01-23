@@ -11,12 +11,14 @@ use App\Services\Response\ResponseService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class SourcesController extends Controller {
+class SourcesController extends Controller
+{
 
 
     private SourcesService $service;
 
-    public function __construct(SourcesService $service) {
+    public function __construct(SourcesService $service)
+    {
         $this->service = $service;
     }
 
@@ -25,7 +27,8 @@ class SourcesController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('view', Source::class);
 
 
@@ -39,7 +42,8 @@ class SourcesController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -47,7 +51,8 @@ class SourcesController extends Controller {
     /**
      * @param SourcesRequest $request
      */
-    public function store(SourcesRequest $request) {
+    public function store(SourcesRequest $request)
+    {
         $item = $this->service->save($request, new Source());
 
         return ResponseService::sendJsonResponse(true, 200, [], [
@@ -60,17 +65,20 @@ class SourcesController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Source $source) {
+    public function show(Source $source)
+    {
         return ResponseService::sendJsonResponse(true, 200, [], [
             'item' => $source->toArray(),
-        ]);    }
+        ]);
+    }
 
     /**
      * Edit resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -78,10 +86,12 @@ class SourcesController extends Controller {
      * Update the specified resource in storage.
      *
      * @param SourcesRequest $request
-     * @param Source $source
+     * @param Source         $source
+     *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(SourcesRequest $request, Source $source) {
+    public function update(SourcesRequest $request, Source $source)
+    {
         $item = $this->service->save($request, $source);
 
         return ResponseService::sendJsonResponse(true, 200, [], [
@@ -94,7 +104,8 @@ class SourcesController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Source $source) {
+    public function destroy(Source $source)
+    {
         $source->delete();
 
         return ResponseService::sendJsonResponse(true, 200, [], [

@@ -10,11 +10,13 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
-class LeadController extends Controller {
+class LeadController extends Controller
+{
 
     private LeadService $service;
 
-    public function __construct(LeadService $service) {
+    public function __construct(LeadService $service)
+    {
         $this->service = $service;
     }
 
@@ -23,13 +25,14 @@ class LeadController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         $this->authorize('view', Lead::class);
 
         $leads = $this->service->getLeads();
 
-        return ResponseService::sendJsonResponse(true,200,[], [
-           'items' => $leads
+        return ResponseService::sendJsonResponse(true, 200, [], [
+            'items' => $leads,
         ]);
     }
 
@@ -38,7 +41,8 @@ class LeadController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -46,15 +50,17 @@ class LeadController extends Controller {
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(LeadCreateRequest $request) {
+    public function store(LeadCreateRequest $request)
+    {
         $this->authorize('create', Lead::class);
 
         $lead = $this->service->store($request, Auth::user());
 
-        return ResponseService::sendJsonResponse(true,200,[], [
-            'item' => $lead->toArray()
+        return ResponseService::sendJsonResponse(true, 200, [], [
+            'item' => $lead->toArray(),
         ]);
     }
 
@@ -63,7 +69,8 @@ class LeadController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
+    public function show($id)
+    {
         //
     }
 
@@ -72,7 +79,8 @@ class LeadController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -80,9 +88,11 @@ class LeadController extends Controller {
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
@@ -91,7 +101,8 @@ class LeadController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
 }

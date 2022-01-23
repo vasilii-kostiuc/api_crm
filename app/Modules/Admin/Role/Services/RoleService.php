@@ -11,10 +11,13 @@ namespace App\Modules\Admin\Role\Services;
 use App\Modules\Admin\Role\Requests\RoleRequest;
 use Illuminate\Database\Eloquent\Model;
 
-class RoleService {
+class RoleService
+{
 
-    public function save(RoleRequest $request, Model $model) {
+    public function save(RoleRequest $request, Model $model)
+    {
         $model->fill($request->only($model->getFillable()));
+
         return $model->save();
     }
 

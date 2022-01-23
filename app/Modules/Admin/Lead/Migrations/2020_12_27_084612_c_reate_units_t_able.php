@@ -18,9 +18,7 @@ class CReateUnitsTAble extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->timestamps();
-
         });
-
     }
 
     /**

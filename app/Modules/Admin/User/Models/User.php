@@ -13,15 +13,17 @@ class User extends AuthUser
 {
     use HasFactory, HasApiTokens, UserRoles, UserLeadsTrait;
 
-    protected $fillable = [
-        'firstname',
-        'lastname',
-        'email',
-        'phone',
-        'status'
-    ];
+    protected $fillable
+        = [
+            'firstname',
+            'lastname',
+            'email',
+            'phone',
+            'status',
+        ];
 
-    protected $hidden = [
-        'password'
-    ];
+    protected $hidden
+        = [
+            'password',
+        ];
 }

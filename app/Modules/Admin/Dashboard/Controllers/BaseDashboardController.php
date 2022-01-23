@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Menu;
 
-class BaseDashboardController extends \App\Http\Controllers\Controller {
+class BaseDashboardController extends \App\Http\Controllers\Controller
+{
 
     protected $template;
 
@@ -33,7 +34,8 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
 
     protected $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
 
         $this->template = "Admin::Dashboard.dashboard";
@@ -41,11 +43,13 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
             $this->locale = App::getLocale();
+
             return $next($request);
         });
     }
 
-    protected function renderOutput() {
+    protected function renderOutput()
+    {
         $this->vars = Arr::add($this->vars, 'content', $this->content);
 
         $menu = $this->getMenu();
@@ -60,42 +64,55 @@ class BaseDashboardController extends \App\Http\Controllers\Controller {
         return view($this->template)->with($this->vars);
     }
 
-    private function getMenu() {
-
+    private function getMenu()
+    {
         return Menu::make('menuDashboard', function ($menu) {
             $routes = \Route::getRoutes()->getRoutes();
-            foreach (MenuModel::menuByType(MenuModel::MENU_TYPE_BACKENND)->get() as $item) {
+            foreach (
+                MenuModel::menuByType(MenuModel::MENU_TYPE_BACKENND)->get() as
+                $item
+            ) {
                 $path = $item->path;
                 if ($path && $this->checkRoute($routes, $path)) {
                     $path = route($path);
                 }
-                if($item->parent == 0){
-                    $menu->add($item->title, $path)->id($item->id)->data('permissions', $this->getPermissions($item));
-                }else{
-                    if($menu->find($item->parent)){
-                        $menu->find($item->parent)->add($item->title, $path)->id($item->id)->data('permissions', $this->getPermissions($item));
+                if ($item->parent == 0) {
+                    $menu->add($item->title, $path)->id($item->id)->data(
+                        'permissions',
+                        $this->getPermissions($item)
+                    );
+                } else {
+                    if ($menu->find($item->parent)) {
+                        $menu->find($item->parent)->add($item->title, $path)
+                            ->id($item->id)->data(
+                            'permissions',
+                            $this->getPermissions($item)
+                        );
                     }
                 }
             }
-        })->filter(function($item){
-            if($this->user->canDo($item->data('permissions'))) {
+        })->filter(function ($item) {
+            if ($this->user->canDo($item->data('permissions'))) {
                 return true;
             }
+
             return false;
         });
     }
 
-    private function checkRoute($routes, $path) {
+    private function checkRoute($routes, $path)
+    {
         foreach ($routes as $route) {
-            if($route->getName() == $path){
+            if ($route->getName() == $path) {
                 return true;
             }
         }
     }
 
-    private function getPermissions($item){
-        return $item->perms->map(function ($item){
-           return $item->alias;
+    private function getPermissions($item)
+    {
+        return $item->perms->map(function ($item) {
+            return $item->alias;
         })->toArray();
     }
 }

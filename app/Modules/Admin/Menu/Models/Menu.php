@@ -8,28 +8,36 @@ use Illuminate\Database\Eloquent\Model;
 use App\Modules\Admin\User\Models\User;
 use App\Modules\Admin\Role\Traits;
 
-class Menu extends Model {
+class Menu extends Model
+{
     use HasFactory;
 
     const MENU_TYPE_FRONT = "front";
     const MENU_TYPE_BACKENND = "admin";
 
-    public function perms(){
-        return $this->belongsToMany(Permission::class, 'permission_menu');
+    public static function scopeFrontMenu($query, User $user)
+    {
+        return $query->where('type', self::MENU_TYPE_FRONT)->whereHas(
+            'perms',
+            function ($q) use ($user) {
+                $arr = collect($user->getMergedPermissions())->map(
+                    function ($item) {
+                        return $item['id'];
+                    }
+                );
+                $q->whereIn('id', $arr->toArray());
+            }
+        );
     }
 
-    public static function scopeFrontMenu($query, User $user) {
-        return $query->where('type', self::MENU_TYPE_FRONT)->
-        whereHas('perms', function ($q) use ($user) {
-            $arr=collect($user->getMergedPermissions())->map(function ($item){
-                return $item['id'];
-            });
-            $q->whereIn('id',$arr->toArray());
-        });
-    }
-
-    public static function scopeMenuByType($query, $type) {
+    public static function scopeMenuByType($query, $type)
+    {
         return $query->where('type', $type)->orderBy('sort_order');
+    }
+
+    public function perms()
+    {
+        return $this->belongsToMany(Permission::class, 'permission_menu');
     }
 
 }

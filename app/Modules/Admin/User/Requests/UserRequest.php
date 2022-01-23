@@ -18,21 +18,6 @@ class UserRequest extends ApiRequest
         return Auth::user()->canDo(['SUPER_ADMINISTRATOR', 'USER_ACCESS']);
     }
 
-    protected function getValidatorInstance()
-    {
-        $validator = parent::getValidatorInstance();
-
-        $validator->sometimes('password',['required','confirmed'],function ($input) {
-
-            if(!empty($input->password) || (empty($input->password) && ($this->route()->getName() != 'api.users.update'))) {
-                return true;
-            }
-            return false;
-        });
-
-        return $validator;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -41,11 +26,33 @@ class UserRequest extends ApiRequest
     public function rules()
     {
         return [
-            'firstname'=>'required',
-            'lastname'=>'required',
-            'email'=>'required',
-            'phone'=>'required',
-            'role_id'=>'required',
+            'firstname' => 'required',
+            'lastname'  => 'required',
+            'email'     => 'required',
+            'phone'     => 'required',
+            'role_id'   => 'required',
         ];
+    }
+
+    protected function getValidatorInstance()
+    {
+        $validator = parent::getValidatorInstance();
+
+        $validator->sometimes(
+            'password',
+            ['required', 'confirmed'],
+            function ($input) {
+                if (!empty($input->password)
+                    || (empty($input->password)
+                        && ($this->route()->getName() != 'api.users.update'))
+                ) {
+                    return true;
+                }
+
+                return false;
+            }
+        );
+
+        return $validator;
     }
 }

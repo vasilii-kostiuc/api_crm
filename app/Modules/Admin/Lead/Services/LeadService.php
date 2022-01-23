@@ -14,17 +14,19 @@ use App\Modules\Admin\Status\Models\Status;
 use App\Modules\Admin\Lead\Requests\LeadCreateRequest;
 use Illuminate\Contracts\Auth\Authenticatable;
 
-class LeadService {
+class LeadService
+{
 
-    public function getLeads() {
+    public function getLeads()
+    {
         $leads = (new Lead)->getLeads();
         $statuses = Status::all();
 
         $resultLeads = [];
 
-        $statuses->each(function ($item, $key) use(&$resultLeads, $leads){
+        $statuses->each(function ($item, $key) use (&$resultLeads, $leads) {
             $collection = $leads->where('status_id', $item->id);
-            $resultLeads[$item->title] = $collection->map(function ($element){
+            $resultLeads[$item->title] = $collection->map(function ($element) {
                 return $element;
             });
         });
@@ -32,7 +34,8 @@ class LeadService {
         return $resultLeads;
     }
 
-    public function store(LeadCreateRequest $request, Authenticatable $user) {
+    public function store(LeadCreateRequest $request, Authenticatable $user)
+    {
         $lead = new Lead();
         $lead->fill($request->only($lead->getFillable()));
 
@@ -43,6 +46,5 @@ class LeadService {
         $user->leads()->save($lead);
 
         return $lead;
-
     }
 }

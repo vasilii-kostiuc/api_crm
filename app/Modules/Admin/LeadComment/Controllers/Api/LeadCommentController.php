@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Modules\Admin\LeadComment\Controllers\Api;
@@ -31,7 +30,8 @@ class LeadCommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -62,7 +62,8 @@ class LeadCommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
